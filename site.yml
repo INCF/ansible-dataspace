@@ -1,0 +1,9 @@
+---
+ - name: "Install DataSpace"
+   hosts: all
+   user: root
+   sudo: yes
+   roles:
+       - unattended-upgrades
+       - postgresql
+       - owncloud

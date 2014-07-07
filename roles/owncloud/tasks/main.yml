@@ -1,0 +1,52 @@
+---
+  - name: "Ensure basic packages are installed"
+    apt: pkg={{ item }} state=present update_cache=yes
+    with_items:
+        - libpq-dev
+        - git
+        - vim
+        - rsync
+        - sudo
+        - python-pip
+        - python-dev
+        - python-apt
+        - python-pycurl
+        - python-psycopg2
+
+  - name: "Ensure owncloud dependencies are installed"
+    apt: pkg={{ item }} state=present update_cache=yes
+    with_items:
+        - php5
+        - php5-pgsql
+        - php5-gd
+        - php5-json # XXX: this one fails in raring, works in saucy :-/
+        - postgresql
+        - php5-ldap
+
+  # - name: "Ensure php5 configuration limits are set"
+  - ini_file: dest=/etc/php5/apache2/php.ini section=PHP option=max_execution_time value=200
+  - ini_file: dest=/etc/php5/apache2/php.ini section=PHP option=upload_max_filesize value=8G
+  - ini_file: dest=/etc/php5/apache2/php.ini section=PHP option=post_max_size value=8G
+  - ini_file: dest=/etc/php5/apache2/php.ini section=PHP option=memory_limit value=4G
+
+  - name: "Setting apache2 vhost definition"
+    template: src=apache2-owncloud dest=/etc/apache2/{{ item }}
+    with_items:
+        - sites-available/owncloud
+        - sites-enabled/owncloud
+
+  - name: "Install owncloud codebase"
+    git: repo=https://github.com/owncloud/core.git dest=/var/www/owncloud
+
+  - name: "Adjust config and themes"
+    template: src=config.php.j2 dest=/var/www/owncloud/config/config.php
+
+  - name: "Adjust permissions"
+    file: path=/var/www/owncloud state=directory owner=www-data group=www-data recurse=true
+
+  # XXX: use notify instead
+  - name: "Ensure apache and postgress are running"
+    service: name={{ item }} state=started
+    with_items:
+        - apache2
+        - postgresql

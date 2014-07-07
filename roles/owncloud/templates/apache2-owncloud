@@ -1,0 +1,15 @@
+<IfModule mod_alias.c>
+Alias /owncloud /var/www/owncloud/
+</IfModule>
+<Directory /var/www/owncloud/>
+   Options FollowSymlinks
+   Order allow,deny
+   allow from all
+</Directory>
+<VirtualHost *>
+    ServerAdmin roman@incf.org
+    DocumentRoot /var/www/owncloud
+    ServerName ids-dev.incf.org
+    ErrorLog ${APACHE_LOG_DIR}/owncloud2.info-error_log
+    CustomLog ${APACHE_LOG_DIR}/owncloud2.info-access_log common
+</VirtualHost>

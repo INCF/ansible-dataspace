@@ -1,0 +1,18 @@
+---
+galaxy_info:
+  author: Roman Valls Guimera
+  description: Deploy a scientific data sharing infrastructure
+  company: International Neuroinformatics Coordinating Facility
+  license: GPLv3
+  min_ansible_version: 1.6
+  platforms:
+    - name: Amazon
+    - name: Ubuntu
+  categories:
+  - cloud
+  - cloud:ec2
+  - monitoring
+  - networking
+  - system
+  - web
+dependencies: []
