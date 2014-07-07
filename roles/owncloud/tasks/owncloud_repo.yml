@@ -1,0 +1,6 @@
+---
+- name: Add ownCloud repo
+  apt_repository: repo='deb http://download.opensuse.org/repositories/isv:/ownCloud:/community/xUbuntu_14.04/ /' state=present update_cache=yes
+
+- name: Add ownCloud repo key
+  apt_key: url='http://download.opensuse.org/repositories/isv:ownCloud:community/xUbuntu_14.04/Release.key' state=present
