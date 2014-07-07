@@ -4,6 +4,8 @@
    user: root
    sudo: yes
    roles:
-       - unattended-upgrades
-       - postgresql
-       - owncloud
+    - unattended-upgrades
+    - postgresql
+    - owncloud
+    - files_irods
+    #XXX: - elasticsearch, logstash.. for DS dashboard

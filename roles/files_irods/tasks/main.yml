@@ -1,2 +1,6 @@
 ---
-# tasks file for owncloud_app_files_irods
+- name: "Checkout files_irods app for OwnCloud"
+  git: repo=https://github.com/owncloud/files_irods.git dest=/var/www/owncloud/apps/files_irods
+
+# XXX: Activate owncloud app programatically
+# XXX: Configure all LDAP INCF-specific stuff, store credentials to ansible-vault
