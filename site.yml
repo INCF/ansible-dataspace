@@ -9,3 +9,4 @@
     - owncloud
     - files_irods
     #XXX: - elasticsearch, logstash.. for DS dashboard
+    #XXX: - irods server and other manual configurations
