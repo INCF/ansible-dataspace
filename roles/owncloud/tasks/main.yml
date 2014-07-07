@@ -35,8 +35,26 @@
         - sites-available/owncloud
         - sites-enabled/owncloud
 
-  - name: "Install owncloud codebase"
-    git: repo=https://github.com/owncloud/core.git dest=/var/www/owncloud
+  - name: "Include OwnCloud official package repos"
+    include: owncloud_repo.yml
+
+  - name: Install ownCloud
+    apt: name=owncloud state=present force=yes
+
+  - name: Adjust Apache docroot
+    replace: dest=/etc/apache2/sites-enabled/000-default.conf regexp='DocumentRoot /var/www/html' replace='DocumentRoot /var/www/owncloud'
+    notify: restart apache2
+   
+  # XXX: Checkout this in another site-enabled, to test cutting edge vs packaged version
+  # Github ratelimits after a few reruns: Failed to connect to github.com port 443: Connection timed out
+  #  - name: "Install owncloud codebase"
+  #    git: repo=https://github.com/owncloud/core.git dest=/var/www/owncloud
+  
+  #- name: "Install owncloud release tarball"
+  #  get_url: url=https://github.com/owncloud/core/archive/v7.0.0RC1.tar.gz dest=/var/www/owncloud
+
+  #- name: "Untar owncloud release"
+  #  unarchive: src=/var/www/owncloud/*.tar.gz dest=/var/www/owncloud
 
   - name: "Adjust config and themes"
     template: src=config.php.j2 dest=/var/www/owncloud/config/config.php
@@ -44,9 +62,8 @@
   - name: "Adjust permissions"
     file: path=/var/www/owncloud state=directory owner=www-data group=www-data recurse=true
 
-  # XXX: use notify instead
-  - name: "Ensure apache and postgress are running"
-    service: name={{ item }} state=started
-    with_items:
-        - apache2
-        - postgresql
+  - name: "Add owncloud Postgresql database credentials"
+    include: postgresql.yml
+    notify:
+        - restart apache2
+        - restart postgresql

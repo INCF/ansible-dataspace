@@ -1,2 +1,5 @@
 ---
-# defaults file for owncloud
+datadirectory: '/mnt/owncloud/data'
+dbname: owncloud
+dbuser: owncloud
+dbpassword: Bo9phahb
