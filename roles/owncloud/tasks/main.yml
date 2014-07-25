@@ -38,10 +38,13 @@
   - name: "Include OwnCloud official package repos"
     include: owncloud_repo.yml
 
-  - name: Install ownCloud
+  - name: "Create data storage folder outside webroot (as specified in config.php)"
+    file: dest=/mnt/owncloud/data mode=775 owner=www-data group=www-data state=directory
+  
+  - name: "Install ownCloud"
     apt: name=owncloud state=present force=yes
 
-  - name: Adjust Apache docroot
+  - name: "Adjust Apache docroot"
     replace: dest=/etc/apache2/sites-enabled/000-default.conf regexp='DocumentRoot /var/www/html' replace='DocumentRoot /var/www/owncloud'
     notify: restart apache2
    

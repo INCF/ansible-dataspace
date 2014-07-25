@@ -1,7 +1,7 @@
 ---
  - name: "Install DataSpace"
    hosts: all
-   user: root
+   user: ubuntu 
    sudo: yes
    roles:
     - unattended-upgrades
