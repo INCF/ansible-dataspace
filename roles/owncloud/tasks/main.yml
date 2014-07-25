@@ -19,7 +19,7 @@
         - php5
         - php5-pgsql
         - php5-gd
-        - php5-json # XXX: this one fails in raring, works in saucy :-/
+        - php5-json
         - postgresql
         - php5-ldap
 
