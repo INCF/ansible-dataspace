@@ -25,9 +25,9 @@
 
   # - name: "Ensure php5 configuration limits are set"
   - ini_file: dest=/etc/php5/apache2/php.ini section=PHP option=max_execution_time value=200
-  - ini_file: dest=/etc/php5/apache2/php.ini section=PHP option=upload_max_filesize value=8G
-  - ini_file: dest=/etc/php5/apache2/php.ini section=PHP option=post_max_size value=8G
-  - ini_file: dest=/etc/php5/apache2/php.ini section=PHP option=memory_limit value=4G
+  - ini_file: dest=/etc/php5/apache2/php.ini section=PHP option=upload_max_filesize value=16G
+  - ini_file: dest=/etc/php5/apache2/php.ini section=PHP option=post_max_size value=16G
+  - ini_file: dest=/etc/php5/apache2/php.ini section=PHP option=memory_limit value=8G
 
   - name: "Setting apache2 vhost definition"
     template: src=apache2-owncloud dest=/etc/apache2/{{ item }}
@@ -38,7 +38,7 @@
   - name: "Include OwnCloud official package repos"
     include: owncloud_repo.yml
 
-  - name: "Create data storage folder outside webroot (as specified in config.php)"
+  - name: "Create data storage folder outside webroot (as specified in (auto)config.php)"
     file: dest=/mnt/owncloud/data mode=775 owner=www-data group=www-data state=directory
   
   - name: "Install ownCloud"
@@ -48,19 +48,8 @@
     replace: dest=/etc/apache2/sites-enabled/000-default.conf regexp='DocumentRoot /var/www/html' replace='DocumentRoot /var/www/owncloud'
     notify: restart apache2
    
-  # XXX: Checkout this in another site-enabled, to test cutting edge vs packaged version
-  # Github ratelimits after a few reruns: Failed to connect to github.com port 443: Connection timed out
-  #  - name: "Install owncloud codebase"
-  #    git: repo=https://github.com/owncloud/core.git dest=/var/www/owncloud
-  
-  #- name: "Install owncloud release tarball"
-  #  get_url: url=https://github.com/owncloud/core/archive/v7.0.0RC1.tar.gz dest=/var/www/owncloud
-
-  #- name: "Untar owncloud release"
-  #  unarchive: src=/var/www/owncloud/*.tar.gz dest=/var/www/owncloud
-
-  - name: "Adjust config and themes"
-    template: src=config.php.j2 dest=/var/www/owncloud/config/config.php
+  - name: "Deploy autoconfig.php"
+    template: src=autoconfig.php.j2 dest=/var/www/owncloud/config/autoconfig.php
 
   - name: "Adjust permissions"
     file: path=/var/www/owncloud state=directory owner=www-data group=www-data recurse=true

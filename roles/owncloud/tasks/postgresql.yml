@@ -7,3 +7,6 @@
 
 - name: ensure user does not have unnecessary privilege
   action: postgresql_user user={{dbuser}} role_attr_flags=NOSUPERUSER,NOCREATEDB
+
+- name: "Apply OwnCloud recommended performance tweaks for PostgresSQL"
+  template: src=20-pgsql.ini dest=/etc/php5/apache2/conf.d/20-pgsql.ini 
