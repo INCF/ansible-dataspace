@@ -1,0 +1,19 @@
+---
+
+#
+# Install and configure a keystone authentication server
+#
+
+#
+# Debian
+#
+
+- include: debian.yml
+  when: ansible_os_family == 'Debian'
+
+#
+# Redhat
+#
+
+- include: redhat.yml
+  when: ansible_os_family == 'RedHat'

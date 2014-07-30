@@ -1,0 +1,28 @@
+---
+
+- name: install required keystone packages
+  yum: pkg={{ item }} state=installed
+  with_items: redhat_packages
+
+- name: ensure mysql-server is running
+  service: name=mysqld enabled=yes state=running
+
+- name: copy over /etc/keystone/logging.conf
+  copy: src=redhat_logging.conf dest=/etc/keystone/logging.conf owner=keystone group=keystone mode=0640
+  notify: restart keystone
+
+- name: create empty /var/log/keystone/error.log and access.log
+  command: touch /var/log/keystone/{{ item }}.log creates=/var/log/keystone/{{ item }}.log
+  with_items:
+    - error
+    - access
+
+- name: ensure error.log and access.log are writable by keystone
+  file: path=/var/log/keystone/{{ item }}.log state=file owner=keystone group=keystone
+  with_items:
+    - error
+    - access
+
+- name: ensure keystone can write to /var/log/keystone
+  file: path=/var/log/keystone recurse=yes owner=keystone group=keystone
+  notify: restart keystone

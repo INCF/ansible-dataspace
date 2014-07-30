@@ -1,0 +1,16 @@
+---
+
+# 
+# Install and configure pound to be ssl termination for swift proxy
+# 
+
+- name: install required packages for lbssl
+  apt: pkg={{ item }} state=installed update_cache=yes cache_valid_time=3600
+  with_items: ubuntu_packages
+
+- name: set /etc/default/pound to allow pound to start
+  template: src=default_pound.j2 dest=/etc/default/pound
+
+- name: copy over pound.cfg
+  template: src=ubuntu_pound.cfg.j2 dest=/etc/pound/pound.cfg owner=root group=root mode=0644
+  notify: restart pound

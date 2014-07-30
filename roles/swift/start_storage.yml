@@ -1,0 +1,31 @@
+---
+
+# XXX FIX ME - duplicate code XXX
+- name: put the *.ring.gz files on all storage servers
+  copy: src=fetch/{{ item }}.ring.gz dest=/etc/swift/{{item}}.ring.gz owner=swift group=swift mode=0640
+  register: new_rings
+  with_items:
+    - account
+    - object
+    - container
+
+- name: make sure default configuration files are *not* there
+  file: state=absent path=/etc/swift/{{ item }}-server.conf
+  with_items:
+    - account
+    - object
+    - container
+
+- name: restart swift-storage node services
+  command: swift-init all stop
+  when: new_rings.changed
+  ignore_errors: True
+
+- name: restart swift-storage node services
+  command: swift-init all start
+  when: new_rings.changed
+
+# XXX FIX ME XXX
+- name: restart syslog
+  service: name=rsyslog state=restarted
+  when: new_rings.changed

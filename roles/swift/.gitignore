@@ -1,0 +1,10 @@
+credentials
+.vagrant
+group_vars/all
+group_vars/all.old
+*.swp
+.DS_store
+tmp
+fetch
+library/test-modules
+library/openstack
