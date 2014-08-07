@@ -1,5 +1,0 @@
----
-
-- include: redhat_install.yml
-- include: redhat_configure.yml
-- include: redhat_service.yml

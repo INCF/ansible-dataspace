@@ -1,4 +1,0 @@
----
-
-- name: ensure squid is running
-  service: name=squid state=started enabled=yes

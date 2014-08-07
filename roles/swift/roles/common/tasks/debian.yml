@@ -15,12 +15,6 @@
 - include: debian_ntp.yml
 
 #
-# Package cache
-#
-
-- include: debian_package_cache.yml
-
-#
 # Havana repository
 # 
 

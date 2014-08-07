@@ -1,5 +1,0 @@
----
-
-- include: debian_install.yml
-- include: debian_configure.yml
-- include: debian_service.yml
