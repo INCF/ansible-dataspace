@@ -19,12 +19,10 @@
 
 - name: umount swift disks
   mount: name=/srv/node/{{ disk_prefix }}{{ item }} state=unmounted src=/dev/loop{{ item }} fstype=xfs
-  with_sequence: count={{ disks }}
   when: "losetup.rc > 0"
 
 - name: remove /srv/node/* disk device directories
   file: state=absent path=/srv/node/{{ disk_prefix }}{{ item }}
-  with_sequence: count={{ disks }}
   when: "losetup.rc > 0"
 
 #- name: remove loop devices
