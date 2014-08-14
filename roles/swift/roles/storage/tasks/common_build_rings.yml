@@ -22,7 +22,7 @@
   command: swift-ring-builder account.builder add r{{ region }}z{{ zone }}-{{ ansible_eth0.ipv4.address }}:6002R{{ ansible_eth0.ipv4.address }}:6002/{{ disk_prefix }}{{ item }} 100
            chdir=/etc/swift
   delegate_to: "{{ swift_proxy_server }}"
-  with_sequence: count={{ disks }}
+  with_sequence: count=3
   when: losetup.rc >0 and rings_exist.rc > 0
 
 
@@ -30,12 +30,12 @@
   command: swift-ring-builder container.builder add r{{ region }}z{{ zone }}-{{ ansible_eth0.ipv4.address }}:6001R{{ ansible_eth0.ipv4.address }}:6001/{{ disk_prefix }}{{ item }} 100
            chdir=/etc/swift
   delegate_to: "{{ swift_proxy_server }}"
-  with_sequence: count={{ disks }}
+  with_sequence: count=3
   when: losetup.rc >0 and rings_exist.rc > 0
 
 - name: build object ring
   command: swift-ring-builder object.builder add r{{ region }}z{{ zone }}-{{ ansible_eth0.ipv4.address }}:6000R{{ ansible_eth0.ipv4.address }}:6000/{{ disk_prefix }}{{ item }} 100
            chdir=/etc/swift
   delegate_to: "{{ swift_proxy_server }}"
-  with_sequence: count={{ disks }}
+  with_sequence: count=3
   when: losetup.rc >0 and rings_exist.rc > 0
