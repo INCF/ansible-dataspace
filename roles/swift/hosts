@@ -9,16 +9,16 @@ swift-lbssl-01 ansible_ssh_host=192.168.5.6
 
 # A place to run swift cli tests
 [swiftclient]
-swift-package-cache-01 ansible_ssh_host=192.168.5.6
+swift-package-cache-01 ansible_ssh_host=192.168.5.13
 
 # Gauntlt is for running security checks
 # See: http://gauntlt.org/
 [gauntlt]
-swift-package-cache-01 ansible_ssh_host=192.168.5.6
+swift-package-cache-01 ansible_ssh_host=192.168.5.13
 
 # apt-cacher-ng
 [package_cache]
-swift-package-cache-01 ansible_ssh_host=192.168.5.10
+swift-package-cache-01 ansible_ssh_host=192.168.5.13
 
 # Swift proxy node
 [proxy]
