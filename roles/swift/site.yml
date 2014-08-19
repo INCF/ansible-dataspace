@@ -1,17 +1,28 @@
 ---
+
+#
+# First setup a package_cache, especially when using
+# your laptop and Vagrant
+#
+
+- hosts: package_cache
+  roles:
+  - package_cache
+
 - hosts: 
-    - all
+  - all
   roles:
-    - common
+  - common
 
 - hosts:
-    - lbssl
+  - lbssl
   roles:
-    - lbssl
+  - lbssl
 
 - hosts:
-    - proxy
-    - storage
+  - proxy
+  - storage
+  - package_cache
   roles:
     - swift_common
 
@@ -21,14 +32,14 @@
     - swiftclient
 
 - hosts: 
-    - auth
+   - authentication
   roles:
-    - keystone
+   - authentication
 
 - hosts: 
-    - proxy
+  - proxy
   roles:
-    - proxy
+  - proxy
 
 #
 # I would have expected serial to work here, and
@@ -37,10 +48,10 @@
 #
 
 - hosts:
-    - storage
+  - storage
   serial: 1
   roles:
-    - storage
+  - storage
 
 #
 # These are not so much roles as starting services
@@ -48,11 +59,21 @@
 # 
 
 - hosts: 
-    - proxy
+  - proxy
+#  vars_file:
+#  - include: vars/{{ansible_os_family}}.yml
   tasks:
-    - include: start_proxy.yml
+  - include: start_proxy.yml
 
 - hosts:
-    - storage
+  - storage
+#  vars_file:
+#  - include: vars/{{ansible_os_family}}.yml
   tasks:
-    - include: start_storage.yml
+  - include: start_storage.yml
+
+#
+# Probably best to run these on their own?
+#
+
+#- include: tests/tests.yml
