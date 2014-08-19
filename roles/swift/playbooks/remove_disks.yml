@@ -6,4 +6,4 @@
 
   - name: cleanup image mounts
     shell: umount /srv/node/{{ disk_prefix }}{{ item }}; losetup -d /dev/loop{{ item }}; rm -f /var/tmp/{{ disk_prefix }}{{ item }}.img
-    with_sequence: count=3
+    with_sequence: count={{ disks }}
