@@ -8,9 +8,9 @@ swift-proxy-01 ansible_ssh_host=192.168.5.6
 
 # Swift storage node
 [storage]
-swift-storage-01 192.168.5.8
-swift-storage-01 192.168.5.9
-swift-storage-03 192.168.5.10
+swift-storage-01 ansible_ssh_host=192.168.5.8
+swift-storage-01 ansible_ssh_host=192.168.5.9
+swift-storage-03 ansible_ssh_host=192.168.5.10
 
 # SSL load balancers
 [lbssl]
