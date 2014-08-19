@@ -50,6 +50,9 @@
    
   - name: "Deploy autoconfig.php"
     template: src=autoconfig.php.j2 dest=/var/www/owncloud/config/autoconfig.php
+  
+  - name: "Define iRODS/Swift external mountpoints"
+    template: src=mount.json.j2 dest=/mnt/owncloud/data
 
   - name: "Adjust permissions"
     file: path=/var/www/owncloud state=directory owner=www-data group=www-data recurse=true

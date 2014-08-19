@@ -3,3 +3,8 @@ datadirectory: '/mnt/owncloud/data'
 dbname: owncloud
 dbuser: owncloud
 dbpassword: Bo9phahb
+
+irods_host: ids.incf.net
+irods_user: test
+irods_zone: incf
+irods_password: test

@@ -1,0 +1,32 @@
+{
+    "user": {
+        "all": {
+            "\/$user\/files\/dataspace": {
+                "class": "\\OCA\\Files_iRODS\\iRODS",
+                "options": {
+                    "host": "{{ irods_host }}",
+                    "port": "1247",
+                    "use_logon_credentials": "false",
+                    "user": "{{ irods_user }}",
+                    "password": "",
+                    "auth_mode": "PAM",
+                    "zone": "{{ irods_zone }}",
+                    "root": "\/",
+                    "password_encrypted": "{{ irods_password }}"
+                },
+                "priority": 100
+            },
+			"\/$user\/files\/swift": {   
+				"class":"\\OC\\Files\\Storage\\SWIFT",
+				"options":{
+					"host":"swift.myhost.com\/auth",
+					"user":"johndoe",
+					"token":"secret",
+					"root":"\/Videos",
+					"secure":"true"
+				},
+				"priority":100
+			},
+        }
+    }
+}
