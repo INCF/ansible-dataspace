@@ -8,5 +8,6 @@
     - postgresql
     - owncloud
     - files_irods
+    #XXX: - swift, need to refactor the hosts/inventory structure
     #XXX: - elasticsearch, logstash.. for DS dashboard
     #XXX: - irods server and other manual configurations
