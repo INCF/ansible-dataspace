@@ -6,6 +6,7 @@
         - git
         - vim
         - rsync
+        - smbclient
         - sudo
         - python-pip
         - python-dev
